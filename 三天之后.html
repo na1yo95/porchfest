@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三天之后</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background-color: #111;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .image-section {
+      flex: 0 0 33%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+    }
+    .image-section img {
+      max-height: 80%;
+      max-width: 90%;
+      object-fit: contain;
+    }
+    .lyrics-section {
+      flex: 1;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .lyrics-line {
+      width: 100%;
+      margin: 0.5em 0;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .faded {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 3.6em;
+    }
+    .current {
+      font-size: 5.6em;
+      font-weight: bold;
+      color: #fff;
+    }
+    .hint {
+      position: absolute;
+      bottom: 1em;
+      right: 2em;
+      color: #666;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="image-section">
+    <img src="/Users/naisongchen/Downloads/Where Are You Going (Postcard (US - Portrait))/三天之后.png" alt="海報圖片"> <!-- 替換為實際圖片 -->
+  </div>
+  <div class="lyrics-section" id="lyrics-display"></div>
+  <div class="hint">←/→ 或 ↑/↓ 切換歌詞</div>
+
+  <script>
+    const lyrics = [
+      "耶穌 親手扛下人的軟弱",
+      "獨自 將所有的罪都承受",
+      "寶血 一滴滴將地染深紅",
+      "為贖回我而流",
+      "失敗釘十架上",
+      "羞愧釘十架上",
+      "絕望釘十架上 救贖在各各他",
+      "疾病釘十架上",
+      "創傷釘十架上",
+      "過去釘十架上 救贖在各各他",
+      "罪惡釘十架上",
+      "驕傲釘十架上",
+      "破碎釘十架上 全都 與祢 埋葬",
+      "把全部釘十架上",
+      "把全部釘十架上",
+      "把一切釘十架上 全都 與祢 埋葬",
+      "耶穌 親手扛下人的軟弱",
+      "獨自 將所有的罪都承受",
+      "寶血 一滴滴將地染深紅",
+      "為贖回我而流",
+      "失敗釘十架上",
+      "羞愧釘十架上",
+      "絕望釘十架上 救贖在各各他",
+      "疾病釘十架上",
+      "創傷釘十架上",
+      "過去釘十架上 救贖在各各他",
+      "罪惡釘十架上",
+      "驕傲釘十架上",
+      "破碎釘十架上 全都 與祢 埋葬",
+      "把全部釘十架上",
+      "把全部釘十架上",
+      "把一切釘十架上 全都 與祢 埋葬",
+      "三天之後祢 復活",
+      "仇敵計謀都 落空",
+      "萬民近前來 歌頌",
+      "喔 全能神 救贖主 基督",
+      "三天之後祢 復活",
+      "仇敵計謀都 落空",
+      "萬民近前來 歌頌",
+      "喔 全能神 救贖主 基督"
+    ];
+
+    let index = 0;
+
+    function renderLyrics() {
+      const container = document.getElementById("lyrics-display");
+      container.innerHTML = "";
+
+      const linesToShow = [
+        lyrics[index - 2] || "",
+        lyrics[index - 1] || "",
+        lyrics[index] || "",
+        lyrics[index + 1] || "",
+        lyrics[index + 2] || "",
+        lyrics[index + 3] || ""
+      ];
+
+      linesToShow.forEach((line, i) => {
+        const div = document.createElement("div");
+        div.classList.add("lyrics-line");
+
+        if (i === 2 || i === 3) {
+          div.classList.add("current");
+        } else {
+          div.classList.add("faded");
+        }
+
+        div.textContent = line;
+        container.appendChild(div);
+      });
+    }
+
+    function next() {
+      if (index + 2 < lyrics.length) {
+        index += 2;
+        renderLyrics();
+      }
+    }
+
+    function previous() {
+      if (index - 2 >= 0) {
+        index -= 2;
+        renderLyrics();
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (["ArrowRight", "ArrowDown"].includes(e.key)) {
+        next();
+      } else if (["ArrowLeft", "ArrowUp"].includes(e.key)) {
+        previous();
+      }
+    });
+
+    renderLyrics();
+  </script>
+</body>
+</html>
